@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<script>
+    const serverId = {{ server_id }};
+</script>
+
+<a href="/" style="margin-bottom: 10px; display: inline-block;">⬅ Volver</a>
+<h2>Monitorizando Servidor</h2>
+
+<div style="display: flex;">
+    <!-- Sidebar -->
+    <div id="sidebar" style="width: 280px; background: white; padding: 20px; border-radius: 10px; box-shadow: 2px 0 5px rgba(0,0,0,0.1); overflow-y: auto; max-height: 600px;">
+        <div style="margin-top: 40px; display: flex; justify-content: space-between; align-items: center;">
+            <h3 style="margin: 0;">Grupos y Usuarios</h3>
+            <button class="circle-btn small-btn" onclick="refreshUserGroupLists()" title="Recargar">⟳</button>  
+        </div>
+        <hr>
+        <div>
+            <button class="btn" onclick="toggleList('users-list', this)" style="width: 100%; margin-bottom: 10px;">👤 Usuarios ▼</button>
+            <ul id="users-list" style="list-style: none; padding-left: 0;"></ul>
+        </div>
+        <div>
+            <button class="btn" onclick="toggleList('groups-list', this)" style="width: 100%; margin-bottom: 10px;">👥 Grupos ▼</button>
+            <ul id="groups-list" style="list-style: none; padding-left: 0;"></ul>
+        </div>
+    </div>
+
+    <!-- Contenido principal -->
+    <div id="mainContent" style="flex: 1;">
+
+        <div class="management-section acciones-servidor">
+            <h3 style="display: flex; justify-content: space-between; align-items: center;">
+                Acciones del Servidor
+            </h3>
+            <div class="botones-acciones">
+                <div class="acciones-izquierda">
+                    <button class="btn danger" onclick="realizarAccion('apagar')"><i class="fas fa-power-off"></i></button>
+                    <button class="btn" onclick="realizarAccion('reiniciar')"><i class="fas fa-sync-alt"></i></button>
+                    <button class="btn" onclick="realizarAccion('update')"><i class="fas fa-download"></i></button>
+                    <button class="btn" onclick="realizarAccion('upgrade')"><i class="fas fa-upload"></i></button>
+                </div>
+                <div class="acciones-derecha">
+                    <button class="btn btn-primary" onclick="abrirModalProgramas()"><i class="fas fa-box"></i> Programas</button>
+                </div>
+            </div>
+            <div id="accionMensaje" class="message"></div>
+        </div>
+
+        <div class="real-time-metrics">
+            <div class="metric-box" onclick="mostrarTopProcesos('ram')">
+                <h3>Uso RAM</h3>
+                <div id="ram-usage" class="metric-value">-</div>
+            </div>
+            <div class="metric-box" onclick="mostrarTopProcesos('cpu')">
+                <h3>Uso CPU</h3>
+                <div id="cpu-usage" class="metric-value">-</div>
+            </div>
+            <div class="metric-box">
+                <h3>Uso Disco</h3>
+                <div id="disk-usage" class="metric-value">-</div>
+            </div>
+        </div>
+
+        <div class="management-section">
+            <div>
+                <h3>Crear Usuario</h3>
+                <form id="createUserForm">
+                    <label for="username">Nombre de Usuario:</label>
+                    <input type="text" id="username" name="username" required><br>
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" name="password" required><br>
+                    <button type="submit" class="btn">Crear Usuario</button>
+                    <div id="managementMessage" class="message"></div>
+                </form>
+            </div>
+            <div>
+                <h3>Crear Grupo</h3>
+                <form id="createGroupForm">
+                    <label for="groupname">Nombre de Grupo:</label>
+                    <input type="text" id="groupname" name="groupname" required><br>
+                    <button type="submit" class="btn">Crear Grupo</button>
+                    <div id="managementMessageGroups" class="message"></div>
+                </form>
+            </div>
+            <div>
+                <h3>Añadir Usuario a Grupo</h3>
+                <form id="addUserToGroupForm">
+                    <label for="usernameToGroup">Usuario:</label>
+                    <input type="text" id="usernameToGroup" name="usernameToGroup" required>
+                    <label for="groupToAdd">Grupo:</label>
+                    <input type="text" id="groupToAdd" name="groupToAdd" required>
+                    <button type="submit" class="btn">Añadir</button>
+                    <div id="userToGroupMessage" class="message"></div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Modal Programas -->
+<div id="programasModal" class="modal-programas" style="display: none;">
+    <div class="modal-content-programas">
+        <span class="close-btn" onclick="cerrarModalProgramas()">×</span>
+        <h3>Programas Instalados</h3>
+        <div id="programas-section" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; margin-top: 30px;"></div>
+    </div>
+</div>
+
+<div id="topProcesoModal" style="display:none;">
+    <div class="modal-content">
+        <span class="close-btn" onclick="cerrarModalTop()">×</span>
+        <h3 id="topProcesoTitulo"></h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>PID</th>
+                    <th>Proceso</th>
+                    <th>% Uso</th>
+                </tr>
+            </thead>
+            <tbody id="topProcesoLista"></tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}
