@@ -43,7 +43,7 @@ Pensada especialmente para pequeñas empresas o entornos educativos con redes de
 
 1. Clona el repositorio:
    
-   git clone https://github.com/tuusuario/tu-repo.git
+   git clone [https://github.com/tuusuario/tu-repo.git](https://github.com/ngarridosanjuan/TFC.git)
 
    cd tu-repo
    
