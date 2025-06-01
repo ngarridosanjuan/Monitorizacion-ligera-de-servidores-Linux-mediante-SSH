@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block contenido %}
+    <h2>Agregar Nuevo Servidor</h2>
+    <form id="formServidor">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+    
+        <label for="host">Host:</label>
+        <input type="text" id="host" name="host" required>
+    
+        <label for="usuario">Usuario:</label>
+        <input type="text" id="usuario" name="usuario" required>
+    
+        <label for="clave">Contraseña:</label>
+        <input type="password" id="clave" name="clave" required>
+    
+        <button type="submit" class="btn">Agregar Servidor</button>
+        <div id="msgServidor" class="mensaje"></div>
+    </form>    
+
+    <h2>Servidores Conectados</h2>
+    {% for servidor in servidores %}
+        <div class="tarjeta-servidor" id="srv-{{ servidor[0] }}">
+            <h3>{{ servidor[1] }} - {{ servidor[2] }}</h3>
+            <a href="/servidor/{{ servidor[0] }}" class="btn">Monitorizar</a>
+            <button class="btn peligro" onclick="eliminarServidor({{ servidor[0] }})">Eliminar</button>
+        </div>
+    {% endfor %}
+{% endblock %}
+
