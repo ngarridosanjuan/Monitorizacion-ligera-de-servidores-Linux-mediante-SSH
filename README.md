@@ -24,11 +24,19 @@ Pensada especialmente para pequeñas empresas o entornos educativos con redes de
 ## 📦 Estructura del proyecto
 
 /app.py          # Servidor Flask
+
 /static/
+
 └── script.js    # Lógica del frontend
+
 └── style.css    # Estilos personalizados
+
 /templates/
+
+└── base.html    # Página base
+
 └── index.html    # Página principal
+
 └── server.html   # Vista individual de servidor
 
 ## 🚀 Instalación y ejecución (modo local)
