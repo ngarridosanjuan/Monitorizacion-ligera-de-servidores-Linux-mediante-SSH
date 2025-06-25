@@ -1,6 +1,6 @@
 # Monitorización ligera de servidores Linux mediante SSH
 
-Este proyecto consiste en una herramienta web ligera y segura diseñada para la monitorización remota y la gestión básica de servidores Linux.
+Este proyecto consiste en una herramienta web ligera diseñada para la monitorización remota y la gestión básica de servidores Linux.
 Pensada especialmente para pequeñas empresas o entornos educativos con redes de hasta 15 servidores.
 
 ## 🔧 Funcionalidades principales
